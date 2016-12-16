@@ -108,5 +108,25 @@ namespace BandTracker
 
             Assert.Equal(expected, result);
         }
+
+        [Fact]
+        public void Test_Delete_DeletesBandFromDatabase()
+        {
+            Band band1 = new Band("Some Band Name", "Some Band Description");
+            band1.Save();
+
+            Band band2 = new Band("Some Band Name", "Some Band Description");
+            band2.Save();
+
+            Band band3 = new Band("Some Band Name", "Some Band Description");
+            band3.Save();
+
+            band2.Delete();
+
+            List<Band> expected = Band.GetAll();
+            List<Band> result = new List<Band> {band1, band3};
+
+            Assert.Equal(expected, result);
+        }
     }
 }
