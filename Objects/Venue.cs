@@ -144,6 +144,7 @@ namespace BandTracker.Objects
             }
             return foundVenue;
         }
+
         public void Update(string newName, string newLocation)
         {
             SqlConnection conn = DB.Connection();
@@ -172,6 +173,66 @@ namespace BandTracker.Objects
             {
                 conn.Close();
             }
+        }
+
+        public void AddBand(Band selectedBand)
+        {
+            SqlConnection conn = DB.Connection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand("INSERT INTO bands_venues (band_id, venue_id) VALUES (@BandId, @VenueId);", conn);
+
+            SqlParameter bandParameter = new SqlParameter();
+            bandParameter.ParameterName = "@BandId";
+            bandParameter.Value = selectedBand.Id;
+
+            SqlParameter venueParameter = new SqlParameter();
+            venueParameter.ParameterName = "@VenueId";
+            venueParameter.Value = this.Id;
+
+            cmd.Parameters.Add(bandParameter);
+            cmd.Parameters.Add(venueParameter);
+
+            cmd.ExecuteNonQuery();
+
+            if(conn != null)
+            {
+                conn.Close();
+            }
+        }
+
+        public List<Band> GetBands()
+        {
+            SqlConnection conn = DB.Connection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand("SELECT bands.* FROM venues JOIN bands_venues ON(venues.id = bands_venues.venue_id) JOIN bands ON (bands.id = bands_venues.band_id) WHERE venues.id = @VenueId", conn);
+            SqlParameter idParameter = new SqlParameter();
+            idParameter.ParameterName = "@VenueId";
+            idParameter.Value = this.Id;
+            cmd.Parameters.Add(idParameter);
+
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            List<Band> allBands = new List<Band> {};
+            while(rdr.Read())
+            {
+                int bandId = rdr.GetInt32(0);
+                string bandName = rdr.GetString(1);
+                string bandLocation = rdr.GetString(2);
+
+                Band newBand = new Band(bandName, bandLocation, bandId);
+                allBands.Add(newBand);
+            }
+            if(rdr != null)
+            {
+                rdr.Close();
+            }
+            if(conn != null)
+            {
+                conn.Close();
+            }
+            return allBands;
         }
     }
 }

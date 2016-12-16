@@ -88,5 +88,42 @@ namespace BandTracker
 
             Assert.Equal(expected, result);
         }
+
+        [Fact]
+        public void Test_GetBands_ReturnsAllVenueBands()
+        {
+            Venue testVenue = new Venue("Staples Center", "Los Angeles, CA");
+            testVenue.Save();
+
+            Band testBand = new Band("Some Band Name", "Some Band Description");
+            testBand.Save();
+
+            testVenue.AddBand(testBand);
+
+            List<Band> savedBand = testVenue.GetBands();
+            List<Band> expected = new List<Band> {testBand};
+
+            Assert.Equal(expected, savedBand);
+        }
+
+        [Fact]
+        public void Test_AddBand_CreatesAssociationWithABandInDatabase()
+        {
+            Venue testVenue = new Venue("Staples Center", "Los Angeles, CA");
+            testVenue.Save();
+
+            Band band1 = new Band("Some Band Name", "Some Band Description");
+            band1.Save();
+
+            Band band2 = new Band("Some Band Name", "Some Band Description");
+            band2.Save();
+
+            testVenue.AddBand(band1);
+
+            List<Band> result = testVenue.GetBands();
+            List<Band> expected = new List<Band> {band1};
+
+            Assert.Equal(expected, result);
+        }
     }
 }

@@ -86,7 +86,7 @@ namespace BandTracker
             List<Venue> savedVenue = testBand.GetVenues();
             List<Venue> expected = new List<Venue> {testVenue};
 
-            Assert.Equal(savedVenue, expected);
+            Assert.Equal(expected, savedVenue);
         }
 
         [Fact]
@@ -106,7 +106,7 @@ namespace BandTracker
             List<Venue> result = testBand.GetVenues();
             List<Venue> expected = new List<Venue> {venue1};
 
-            Assert.Equal(result, expected);
+            Assert.Equal(expected, result);
         }
     }
 }
