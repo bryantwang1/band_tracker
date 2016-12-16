@@ -173,5 +173,32 @@ namespace BandTracker
 
             Assert.Equal(expected, result);
         }
+
+        [Fact]
+        public void Test_RemoveBand_DisassociatesBandFromVenue()
+        {
+            Venue testVenue1 = new Venue("Staples Center", "Los Angeles, CA");
+            testVenue1.Save();
+
+            Band band1 = new Band("Some Band Name", "Some Band Description");
+            band1.Save();
+
+            Band band2 = new Band("Some Band Name", "Some Band Description");
+            band2.Save();
+
+            Band band3 = new Band("Some Band Name", "Some Band Description");
+            band3.Save();
+
+            testVenue1.AddBand(band1);
+            testVenue1.AddBand(band2);
+            testVenue1.AddBand(band3);
+
+            testVenue1.RemoveBand(band2);
+
+            List<Band> result = testVenue1.GetBands();
+            List<Band> expected = new List<Band> {band1,band3};
+
+            Assert.Equal(expected, result);
+        }
     }
 }

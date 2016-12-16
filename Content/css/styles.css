@@ -31,3 +31,18 @@ h1 {
 input {
     width: 40%;
 }
+
+textarea {
+    vertical-align: top;
+    width: 50%;
+    height: 10vh;
+}
+
+.form-group span {
+    font-size: 20px;
+}
+
+h5 {
+    font-size: 18px;
+    margin-left: 1vw;
+}

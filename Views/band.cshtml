@@ -15,7 +15,7 @@ else
 {
     @foreach(var venue in Model.GetVenues())
     {
-        <h5><a href="/venue/@venue.Id">@venue.Name</a></h5>
+        <h5><a href="/venue/@venue.Id">@venue.Name</a> | <a href="band/remove_venue/@venue.Id">Remove from this Band</a></h5>
     }
 }
 
