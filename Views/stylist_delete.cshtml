@@ -1,0 +1,32 @@
+@{
+    Layout="Shared/_Layout.cshtml";
+}
+
+<h1>Delete a stylist</h1>
+
+<h2>Are you sure you want to delete this stylist and all associated clients?</h2>
+<h3>Name: @Model.GetName()</h3>
+<h4>Phone: @Model.GetPhone()</h4>
+<h4>Description: @Model.GetDescription()</h4>
+<h4>Clients: </h4>
+@if(Model.GetClients().Count <= 0)
+{
+    <h5>This stylist doesn't have any clients yet.</h5>
+}
+else
+{
+    @foreach(var client in Model.GetClients())
+    {
+        <h5><a href="/client/@client.GetId()">@client.GetName()</a></h5>
+    }
+}
+
+<form action="/stylist/delete/@Model.GetId()" method="post">
+  <input type="hidden" name="_method" value="DELETE">
+  <h4>Do not press this button more than once: </h4>
+  <button type="submit" class="btn btn-warning">Delete Stylist</button>
+</form>
+
+<div class="footer-links">
+    <h4><a href="/">Click here to return to the homepage.</a></h4>
+</div>

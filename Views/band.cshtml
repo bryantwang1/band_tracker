@@ -1,0 +1,28 @@
+@{
+    Layout="Shared/_Layout.cshtml";
+}
+
+<h1>Band</h1>
+
+<h3>Name: @Model.Name</h3>
+<h4>Description: @Model.Description</h4>
+<h4>Venues that @Model.Name is playing at: </h4>
+@if(Model.GetVenues().Count <= 0)
+{
+    <h5>This band doesn't have any tracked venues yet.</h5>
+}
+else
+{
+    @foreach(var venue in Model.GetVenues())
+    {
+        <h5><a href="/venue/@venue.Id">@venue.Name</a></h5>
+    }
+}
+
+<div class="footer-links">
+    <h4><a href="/band/edit/@Model.Id">Click here to edit this band.</a></h4>
+    <h4><a href="/band/@Model.Id/new_venue">Click here to add a venue to this band.</a></h4>
+    <h4><a href="/bands">Click here to view all bands.</a></h4>
+    <h4><a href="/">Click here to return to the homepage.</a></h4>
+    <h4 id="warning"><a href="/band/delete/@Model.Id">Click here to delete this band.</a></h4>
+</div>

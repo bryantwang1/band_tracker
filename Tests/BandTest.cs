@@ -128,5 +128,22 @@ namespace BandTracker
 
             Assert.Equal(expected, result);
         }
+
+        [Fact]
+        public void Test_Update_UpdatesBandInDatabase()
+        {
+            Band testBand = new Band("Some Band Name", "Some Band Description");
+            testBand.Save();
+
+            string newName = "nano.RIPE";
+            string newDescription = "A Japanese pop rock band with two core members.";
+
+            testBand.Update(newName, newDescription);
+
+            Band result = Band.GetAll()[0];
+            Band expected = new Band(newName, newDescription, testBand.Id);
+
+            Assert.Equal(expected, result);
+        }
     }
 }

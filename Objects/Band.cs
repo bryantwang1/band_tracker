@@ -226,5 +226,36 @@ namespace BandTracker.Objects
                 conn.Close();
             }
         }
+
+        public void Update(string newName, string newDescription)
+        {
+            SqlConnection conn = DB.Connection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand("UPDATE bands name = @NewName, description = @NewDescription WHERE id = @BandId;", conn);
+
+            SqlParameters nameParameter = new SqlParameter();
+            nameParameter.ParameterName = "@NewName";
+            nameParameter.Value = newName;
+
+            SqlParameters descriptionParameter = new SqlParameter();
+            descriptionParameter.ParameterName = "@NewDescription";
+            descriptionParameter.Value = newDescription;
+
+            SqlParameters idParameter = new SqlParameter();
+            idParameter.ParameterName = "@BandId";
+            idParameter.Value = this.Id;
+
+            cmd.Parameters.Add(nameParameter);
+            cmd.Parameters.Add(descriptionParameter);
+            cmd.Parameters.Add(idParameter);
+
+            cmd.ExecuteNonQuery();
+
+            if(conn != null)
+            {
+                conn.Close();
+            }
+        }
     }
 }

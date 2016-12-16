@@ -1,0 +1,21 @@
+@{
+    Layout="Shared/_Layout.cshtml";
+}
+
+<h1>Add a Band</h1>
+
+<form action="/bands/new/" method="post">
+    <div class="form-group">
+        <label for="band-name">Name: </label>
+        <input type="text" name="band-name" id="band-name" placeholder="nano.RIPE" required autofocus>
+    </div>
+    <div class="form-group">
+        <label for="band-description">Description: </label>
+        <input type="text" name="band-description" id="band-description" placeholder="A Japanese pop rock band with two core members." required>
+    </div>
+    <button type="submit" class="btn btn-default">Add Band</button>
+</form>
+
+<div class="footer-links">
+    <h4><a href="/">Click here to return to the homepage without adding a band.</a></h4>
+</div>
