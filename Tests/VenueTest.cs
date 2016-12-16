@@ -24,5 +24,26 @@ namespace BandTracker
 
             Assert.Equal(0, result);
         }
+
+        [Fact]
+        public void Test_Equal_ReturnsTrueForSameData()
+        {
+            Venue venue1 = new Venue("Staples Center", "Los Angeles, CA");
+            Venue venue2 = new Venue("Staples Center", "Los Angeles, CA");
+
+            Assert.Equal(venue1, venue2);
+        }
+
+        [Fact]
+        public void Test_Save_SavesVenueToDatabase()
+        {
+            Venue testVenue = new Venue("Staples Center", "Los Angeles, CA");
+            testVenue.Save();
+
+            List<Venue> result = Venue.GetAll();
+            List<Venue> testList = new List<Venue> {testVenue};
+
+            Assert.Equal(testList, result);
+        }
     }
 }
