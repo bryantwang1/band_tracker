@@ -61,17 +61,17 @@ namespace BandTracker
             Assert.Equal(expected, result);
         }
         //
-        // [Fact]
-        // public void Test_Find_ReturnsSpecificBandFromDatabase()
-        // {
-        //     Band testBand = new Band("Some Band Name", "Some Band Description");
-        //     testBand.Save();
-        //
-        //     Band result = Band.Find(testBand.Id);
-        //
-        //     Assert.Equal(result, testBand);
-        // }
-        //
+        [Fact]
+        public void Test_Find_ReturnsSpecificBandFromDatabase()
+        {
+            Band testBand = new Band("Some Band Name", "Some Band Description");
+            testBand.Save();
+
+            Band result = Band.Find(testBand.Id);
+
+            Assert.Equal(result, testBand);
+        }
+
         // [Fact]
         // public void Test_Update_UpdatesBandInDatabase()
         // {
