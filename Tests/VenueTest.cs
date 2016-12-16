@@ -70,5 +70,22 @@ namespace BandTracker
 
             Assert.Equal(result, testVenue);
         }
+
+        [Fact]
+        public void Test_Update_UpdatesVenueInDatabase()
+        {
+            Venue testVenue = new Venue("Staples Center", "Los Angeles, CA");
+            testVenue.Save();
+
+            string newName = "Arlene Schnitzer Concert Hall";
+            string newLocation = "Portland, OR";
+
+            testVenue.Update(newName, newLocation);
+
+            Venue result = Venue.GetAll()[0];
+            Venue expected = new Venue(newName, newLocation, testVenue.Id);
+
+            Assert.Equal(expected, result);
+        }
     }
 }
