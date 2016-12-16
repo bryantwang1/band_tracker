@@ -1,3 +1,12 @@
+body {
+    background-image: linear-gradient(to bottom, white, lightgray);
+    background-attachment: fixed;
+}
+
+#warning a {
+    color: darkred;
+}
+
 .footer-links {
     margin-top: 20px;
     background-color: #f2f2f2;
@@ -17,3 +26,8 @@ h1 {
     box-shadow: 5px 5px 20px black;
     margin-top: 18px;
     width: 720px;
+}
+
+input {
+    width: 40%;
+}

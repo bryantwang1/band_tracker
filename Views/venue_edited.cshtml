@@ -2,11 +2,11 @@
     Layout="Shared/_Layout.cshtml";
 }
 
-<h1>Venue</h1>
+<h1>You Edited a Venue</h1>
 
 <h3>Name: @Model.Name</h3>
 <h4>Location: @Model.Location</h4>
-<h4>Bands hosted at this venue: </h4>
+<h4>Bands playing at this venue: </h4>
 @if(Model.GetBands().Count <= 0)
 {
     <h5>This venue doesn't have any tracked bands yet.</h5>
@@ -15,7 +15,7 @@ else
 {
     @foreach(var band in Model.GetBands())
     {
-        <h5><a href="/band/@band.Id">@band.Name</a></h5>
+        <h5><a href="/band/@band.GetId()">@band.Name</a></h5>
     }
 }
 

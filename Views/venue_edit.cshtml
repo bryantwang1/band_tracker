@@ -1,0 +1,23 @@
+@{
+    Layout="Shared/_Layout.cshtml";
+}
+
+<h1>Edit Venue: @Model.Name</h1>
+
+<form action="/venue/edit/@Model.Id" method="post">
+    <input type="hidden" name="_method" value="PATCH">
+    <input name="venue-id" type="hidden" value="@Model.Id">
+    <div class="form-group">
+        <label for="venue-name">Name: </label>
+        <input type="text" name="venue-name" id="venue-name" placeholder="Staples Center" value="@Model.Name" required autofocus>
+    </div>
+    <div class="form-group">
+        <label for="venue-location">Location: </label>
+        <input type="text" name="venue-location" id="venue-location" placeholder="Los Angeles, CA" value="@Model.Location" pattern=".+,\s*[A-Z]{2}" title="Required format is City Name, State Abbreviation" required>
+    </div>
+    <button type="submit" class="btn btn-default">Edit Venue</button>
+</form>
+
+<div class="footer-links">
+    <h4><a href="/">Click here to return to the homepage without editing this venue.</a></h4>
+</div>

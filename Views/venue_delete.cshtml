@@ -1,0 +1,31 @@
+@{
+    Layout="Shared/_Layout.cshtml";
+}
+
+<h1>Delete a Venue</h1>
+
+<h2>Are you sure you want to delete this venue?</h2>
+<h3>Name: @Model.Name</h3>
+<h4>Location: @Model.Location</h4>
+<h4>Bands hosted at this venue: </h4>
+@if(Model.GetBands().Count <= 0)
+{
+    <h5>This venue isn't hosting any bands.</h5>
+}
+else
+{
+    @foreach(var band in Model.GetBands())
+    {
+        <h5><a href="/band/@band.Id">@band.Name</a></h5>
+    }
+}
+
+<form action="/venue/delete/@Model.Id" method="post">
+  <input type="hidden" name="_method" value="DELETE">
+  <h4>Do not press this button more than once: </h4>
+  <button type="submit" class="btn btn-warning">DELETE VENUE</button>
+</form>
+
+<div class="footer-links">
+    <h4><a href="/">Click here to return to the homepage.</a></h4>
+</div>

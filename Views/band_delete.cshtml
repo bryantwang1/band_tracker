@@ -2,14 +2,15 @@
     Layout="Shared/_Layout.cshtml";
 }
 
-<h1>Band</h1>
+<h1>Delete a Band</h1>
 
+<h2>Are you sure you want to delete this band?</h2>
 <h3>Name: @Model.Name</h3>
 <h4>Description: @Model.Description</h4>
 <h4>Venues that @Model.Name is playing at: </h4>
 @if(Model.GetVenues().Count <= 0)
 {
-    <h5>This band doesn't have any tracked venues yet.</h5>
+    <h5>This band isn't playing at any venues.</h5>
 }
 else
 {
@@ -19,10 +20,13 @@ else
     }
 }
 
+
+<form action="/band/delete/@Model.Id" method="post">
+  <input type="hidden" name="_method" value="DELETE">
+  <h4>Do not press this button more than once: </h4>
+  <button type="submit" class="btn btn-warning">DELETE BAND</button>
+</form>
+
 <div class="footer-links">
-    <h4><a href="/band/edit/@Model.Id">Click here to edit this band.</a></h4>
-    <h4><a href="/band/@Model.Id/new_venue">Click here to add a venue to this band.</a></h4>
-    <h4><a href="/venues">Click here to view all venues.</a></h4>
     <h4><a href="/">Click here to return to the homepage.</a></h4>
-    <h4 id="warning"><a href="/band/delete/@Model.Id">Click here to delete this band.</a></h4>
 </div>
