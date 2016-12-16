@@ -125,5 +125,25 @@ namespace BandTracker
 
             Assert.Equal(expected, result);
         }
+
+        [Fact]
+        public void Test_Delete_DeletesBandFromDatabase()
+        {
+            Venue venue1 = new Venue("Staples Center", "Los Angeles, CA");
+            venue1.Save();
+
+            Venue venue2 = new Venue("Staples Center", "Los Angeles, CA");
+            venue2.Save();
+
+            Venue venue3 = new Venue("Staples Center", "Los Angeles, CA");
+            venue3.Save();
+
+            venue2.Delete();
+
+            List<Venue> expected = Venue.GetAll();
+            List<Venue> result = new List<Venue> {venue1, venue3};
+
+            Assert.Equal(expected, result);
+        }
     }
 }

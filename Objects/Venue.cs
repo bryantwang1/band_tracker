@@ -234,5 +234,24 @@ namespace BandTracker.Objects
             }
             return allBands;
         }
+
+        public void Delete()
+        {
+            SqlConnection conn = DB.Connection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand("DELETE FROM venues WHERE id = @VenueId; DELETE FROM bands_venues WHERE venue_id = @VenueId;", conn);
+            SqlParameter idParameter = new SqlParameter();
+            idParameter.ParameterName = "@VenueId";
+            idParameter.Value = this.Id;
+            cmd.Parameters.Add(idParameter);
+
+            cmd.ExecuteNonQuery();
+
+            if(conn != null)
+            {
+                conn.Close();
+            }
+        }
     }
 }
