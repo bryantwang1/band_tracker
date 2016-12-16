@@ -1,0 +1,82 @@
+using System.Data;
+using System;
+using System.Data.SqlClient;
+using System.Collections.Generic;
+
+namespace BandTracker.Objects
+{
+    public class Band
+    {
+        public int Id{get; set;}
+        public string Name{get; set;}
+        public string Description{get; set;}
+
+        public Band(string bandName, string bandDescription, int bandId = 0)
+        {
+            this.Id = bandId;
+            this.Name = bandName;
+            this.Description = bandDescription;
+        }
+
+        public override bool Equals(System.Object otherBand)
+        {
+            if(!(otherBand is Band))
+            {
+                return false;
+            }
+            else
+            {
+                Band newBand = (Band) otherBand;
+                bool idEquality = this.Id == newBand.Id;
+                bool nameEquality = this.Name == newBand.Name;
+                bool descriptionEquality = this.Description == newBand.Description;
+                return(idEquality && nameEquality && descriptionEquality);
+            }
+        }
+
+        public static void DeleteAll()
+        {
+            SqlConnection conn = DB.Connection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand("DELETE FROM bands;", conn);
+
+            cmd.ExecuteNonQuery();
+
+            if(conn != null)
+            {
+                conn.Close();
+            }
+        }
+
+        public static List<Band> GetAll()
+        {
+            SqlConnection conn = DB.Connection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM bands;", conn);
+
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            List<Band> allBands = new List<Band> {};
+            while(rdr.Read())
+            {
+                int bandId = rdr.GetInt32(0);
+                string bandName = rdr.GetString(1);
+                string bandDescription = rdr.GetString(2);
+
+                Band newBand = new Band(bandName, bandDescription, bandId);
+                allBands.Add(newBand);
+            }
+            if(rdr != null)
+            {
+                rdr.Close();
+            }
+            if(conn != null)
+            {
+                conn.Close();
+            }
+            return allBands;
+        }
+    }
+}
