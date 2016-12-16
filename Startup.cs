@@ -6,7 +6,7 @@ using Nancy.Owin;
 using Nancy.ViewEngines.Razor;
 using Xunit;
 
-namespace HairSalon
+namespace BandTracker
 {
   public class Startup
   {
