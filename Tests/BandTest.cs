@@ -145,5 +145,32 @@ namespace BandTracker
 
             Assert.Equal(expected, result);
         }
+
+        [Fact]
+        public void Test_GetUnrelatedVenues_ReturnsListOfUnassociatedVenues()
+        {
+            Band testBand1 = new Band("Some Band Name", "Some Band Description");
+            testBand1.Save();
+
+            Band testBand2 = new Band("Some Band Name", "Some Band Description");
+            testBand2.Save();
+
+            Venue venue1 = new Venue("Staples Center", "Los Angeles, CA");
+            venue1.Save();
+
+            Venue venue2 = new Venue("Staples Center", "Los Angeles, CA");
+            venue2.Save();
+
+            Venue venue3 = new Venue("Staples Center", "Los Angeles, CA");
+            venue3.Save();
+
+            testBand1.AddVenue(venue1);
+            testBand2.AddVenue(venue2);
+
+            List<Venue> result = testBand1.GetUnrelatedVenues();
+            List<Venue> expected = new List<Venue> {venue2, venue3};
+
+            Assert.Equal(expected, result);
+        }
     }
 }
