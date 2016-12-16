@@ -1,9 +1,9 @@
 using Nancy;
-using HairSalon.Objects;
+using BandTracker.Objects;
 using System.Collections.Generic;
 using System;
 
-namespace HairSalon
+namespace BandTracker
 {
     public class HomeModule : NancyModule
     {

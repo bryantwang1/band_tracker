@@ -232,17 +232,17 @@ namespace BandTracker.Objects
             SqlConnection conn = DB.Connection();
             conn.Open();
 
-            SqlCommand cmd = new SqlCommand("UPDATE bands name = @NewName, description = @NewDescription WHERE id = @BandId;", conn);
+            SqlCommand cmd = new SqlCommand("UPDATE bands SET name = @NewName, description = @NewDescription WHERE id = @BandId;", conn);
 
-            SqlParameters nameParameter = new SqlParameter();
+            SqlParameter nameParameter = new SqlParameter();
             nameParameter.ParameterName = "@NewName";
             nameParameter.Value = newName;
 
-            SqlParameters descriptionParameter = new SqlParameter();
+            SqlParameter descriptionParameter = new SqlParameter();
             descriptionParameter.ParameterName = "@NewDescription";
             descriptionParameter.Value = newDescription;
 
-            SqlParameters idParameter = new SqlParameter();
+            SqlParameter idParameter = new SqlParameter();
             idParameter.ParameterName = "@BandId";
             idParameter.Value = this.Id;
 
