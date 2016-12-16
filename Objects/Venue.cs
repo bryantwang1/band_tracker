@@ -235,6 +235,40 @@ namespace BandTracker.Objects
             return allBands;
         }
 
+        public List<Band> GetUnrelatedBands()
+        {
+            SqlConnection conn = DB.Connection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand("SELECT bands.* FROM bands LEFT OUTER JOIN bands_venues ON(bands.id = bands_venues.band_id) WHERE bands_venues.venue_id <> @VenueId OR bands_venues.venue_id IS null;", conn);
+            SqlParameter idParameter = new SqlParameter();
+            idParameter.ParameterName = "@VenueId";
+            idParameter.Value = this.Id;
+            cmd.Parameters.Add(idParameter);
+
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            List<Band> allBands = new List<Band> {};
+            while(rdr.Read())
+            {
+                int bandId = rdr.GetInt32(0);
+                string bandName = rdr.GetString(1);
+                string bandLocation = rdr.GetString(2);
+
+                Band newBand = new Band(bandName, bandLocation, bandId);
+                allBands.Add(newBand);
+            }
+            if(rdr != null)
+            {
+                rdr.Close();
+            }
+            if(conn != null)
+            {
+                conn.Close();
+            }
+            return allBands;
+        }
+
         public void Delete()
         {
             SqlConnection conn = DB.Connection();
