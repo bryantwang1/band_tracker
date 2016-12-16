@@ -39,7 +39,7 @@ namespace BandTracker.Objects
             SqlConnection conn = DB.Connection();
             conn.Open();
 
-            SqlCommand cmd = new SqlCommand("DELETE FROM bands;", conn);
+            SqlCommand cmd = new SqlCommand("DELETE FROM bands;DELETE FROM bands_venues;", conn);
 
             cmd.ExecuteNonQuery();
 
@@ -146,6 +146,66 @@ namespace BandTracker.Objects
                 conn.Close();
             }
             return foundBand;
+        }
+
+        public void AddVenue(Venue selectedVenue)
+        {
+            SqlConnection conn = DB.Connection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand("INSERT INTO bands_venues (band_id, venue_id) VALUES (@BandId, @VenueId);", conn);
+
+            SqlParameter bandParameter = new SqlParameter();
+            bandParameter.ParameterName = "@BandId";
+            bandParameter.Value = this.Id;
+
+            SqlParameter venueParameter = new SqlParameter();
+            venueParameter.ParameterName = "@VenueId";
+            venueParameter.Value = selectedVenue.Id;
+
+            cmd.Parameters.Add(bandParameter);
+            cmd.Parameters.Add(venueParameter);
+
+            cmd.ExecuteNonQuery();
+
+            if(conn != null)
+            {
+                conn.Close();
+            }
+        }
+
+        public List<Venue> GetVenues()
+        {
+            SqlConnection conn = DB.Connection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand("SELECT venues.* FROM venues JOIN bands_venues ON(venues.id = bands_venues.venue_id) JOIN bands ON (bands.id = bands_venues.band_id) WHERE bands.id = @BandId", conn);
+            SqlParameter idParameter = new SqlParameter();
+            idParameter.ParameterName = "@BandId";
+            idParameter.Value = this.Id;
+            cmd.Parameters.Add(idParameter);
+
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            List<Venue> allVenues = new List<Venue> {};
+            while(rdr.Read())
+            {
+                int venueId = rdr.GetInt32(0);
+                string venueName = rdr.GetString(1);
+                string venueLocation = rdr.GetString(2);
+
+                Venue newVenue = new Venue(venueName, venueLocation, venueId);
+                allVenues.Add(newVenue);
+            }
+            if(rdr != null)
+            {
+                rdr.Close();
+            }
+            if(conn != null)
+            {
+                conn.Close();
+            }
+            return allVenues;
         }
     }
 }

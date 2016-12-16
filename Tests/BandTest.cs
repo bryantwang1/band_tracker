@@ -15,7 +15,7 @@ namespace BandTracker
         public void Dispose()
         {
             Band.DeleteAll();
-            Band.DeleteAll();
+            Venue.DeleteAll();
         }
 
         [Fact]
@@ -35,7 +35,7 @@ namespace BandTracker
             Assert.Equal(band1, band2);
         }
 
-        // [Fact]
+        [Fact]
         public void Test_Save_SavesBandToDatabase()
         {
             Band testBand = new Band("Some Band Name", "Some Band Description");
@@ -60,7 +60,7 @@ namespace BandTracker
 
             Assert.Equal(expected, result);
         }
-        //
+
         [Fact]
         public void Test_Find_ReturnsSpecificBandFromDatabase()
         {
@@ -72,21 +72,41 @@ namespace BandTracker
             Assert.Equal(result, testBand);
         }
 
-        // [Fact]
-        // public void Test_Update_UpdatesBandInDatabase()
-        // {
-        //     Band testBand = new Band("Some Band Name", "Some Band Description");
-        //     testBand.Save();
-        //
-        //     string newName = "Some Other Band Name";
-        //     string newDescription = "Some Other Band Description";
-        //
-        //     testBand.Update(newName, newDescription);
-        //
-        //     Band result = Band.GetAll()[0];
-        //     Band expected = new Band(newName, newDescription, testBand.Id);
-        //
-        //     Assert.Equal(expected, result);
-        // }
+        [Fact]
+        public void Test_GetVenues_ReturnsAllBandVenues()
+        {
+            Band testBand = new Band("Some Band Name", "Some Band Description");
+            testBand.Save();
+
+            Venue testVenue = new Venue("Staples Center", "Los Angeles, CA");
+            testVenue.Save();
+
+            testBand.AddVenue(testVenue);
+
+            List<Venue> savedVenue = testBand.GetVenues();
+            List<Venue> expected = new List<Venue> {testVenue};
+
+            Assert.Equal(savedVenue, expected);
+        }
+
+        [Fact]
+        public void Test_AddVenue_CreatesAssociationWithAVenueInDatabase()
+        {
+            Band testBand = new Band("Some Band Name", "Some Band Description");
+            testBand.Save();
+
+            Venue venue1 = new Venue("Staples Center", "Los Angeles, CA");
+            venue1.Save();
+
+            Venue venue2 = new Venue("Staples Center", "Los Angeles, CA");
+            venue2.Save();
+
+            testBand.AddVenue(venue1);
+
+            List<Venue> result = testBand.GetVenues();
+            List<Venue> expected = new List<Venue> {venue1};
+
+            Assert.Equal(result, expected);
+        }
     }
 }
