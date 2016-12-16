@@ -78,5 +78,39 @@ namespace BandTracker.Objects
             }
             return allBands;
         }
+
+        public void Save()
+        {
+            SqlConnection conn = DB.Connection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand("INSERT INTO bands (name, description) OUTPUT INSERTED.id VALUES (@BandName, @BandDescription);", conn);
+
+            SqlParameter nameParameter = new SqlParameter();
+            nameParameter.ParameterName = "@BandName";
+            nameParameter.Value = this.Name;
+
+            SqlParameter descriptionParameter = new SqlParameter();
+            descriptionParameter.ParameterName = "@BandDescription";
+            descriptionParameter.Value = this.Description;
+
+            cmd.Parameters.Add(nameParameter);
+            cmd.Parameters.Add(descriptionParameter);
+
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            while(rdr.Read())
+            {
+                this.Id = rdr.GetInt32(0);
+            }
+            if(rdr != null)
+            {
+                rdr.Close();
+            }
+            if(conn != null)
+            {
+                conn.Close();
+            }
+        }
     }
 }

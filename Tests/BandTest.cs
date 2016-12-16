@@ -36,30 +36,30 @@ namespace BandTracker
         }
 
         // [Fact]
-        // public void Test_Save_SavesBandToDatabase()
-        // {
-        //     Band testBand = new Band("Some Band Name", "Some Band Description");
-        //     testBand.Save();
-        //
-        //     List<Band> result = Band.GetAll();
-        //     List<Band> testList = new List<Band> {testBand};
-        //
-        //     Assert.Equal(testList, result);
-        // }
-        //
-        // [Fact]
-        // public void Test_Save_AssignsIdToSavedObject()
-        // {
-        //     Band testBand = new Band("Some Band Name", "Some Band Description");
-        //     testBand.Save();
-        //
-        //     Band savedBand = Band.GetAll()[0];
-        //
-        //     int result = savedBand.Id;
-        //     int expected = testBand.Id;
-        //
-        //     Assert.Equal(expected, result);
-        // }
+        public void Test_Save_SavesBandToDatabase()
+        {
+            Band testBand = new Band("Some Band Name", "Some Band Description");
+            testBand.Save();
+
+            List<Band> result = Band.GetAll();
+            List<Band> testList = new List<Band> {testBand};
+
+            Assert.Equal(testList, result);
+        }
+
+        [Fact]
+        public void Test_Save_AssignsIdToSavedObject()
+        {
+            Band testBand = new Band("Some Band Name", "Some Band Description");
+            testBand.Save();
+
+            Band savedBand = Band.GetAll()[0];
+
+            int result = savedBand.Id;
+            int expected = testBand.Id;
+
+            Assert.Equal(expected, result);
+        }
         //
         // [Fact]
         // public void Test_Find_ReturnsSpecificBandFromDatabase()
