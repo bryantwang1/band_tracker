@@ -6,7 +6,7 @@
 
 ## Setup/Installation Requirements
 
-_To run this web app you need the Nancy framework for C#_
+_To run this web app you need the Nancy framework for C# as well as a local SQL server._
 
 1. Clone this repository
 2. Open Windows PowerShell
@@ -27,6 +27,7 @@ _To run this web app you need the Nancy framework for C#_
           > GO
 
   * Do the above for a database called band_tracker_test or just delete the test files if you don't want to bother;
+6. Check the Startup.cs file to make sure that the DBConfiguration ConnectionString's data source has the correct path for your local SQL server.
 7. Type `dnx kestrel` into PowerShell and hit enter, the local server should now be running
 8. Open your preferred web browser and navigate to localhost:5004, the main page should appear
 9. Go wild
