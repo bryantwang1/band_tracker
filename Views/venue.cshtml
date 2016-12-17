@@ -15,7 +15,14 @@ else
 {
     @foreach(var band in Model.GetBands())
     {
-        <h5><a href="/band/@band.Id">@band.Name</a> | <a href="/venue/remove_band/@band.Id">Remove from this Venue</a></h5>
+        <div class="custom-line-item">
+            <h5><a href="/band/@band.Id">@band.Name</a></h5>
+            <form action="/venue/remove_band/@band.Id" method="post">
+              <input type="hidden" name="_method" value="DELETE">
+              <input type="hidden" name="venue-id" value="@Model.Id">
+              <button type="submit" class="btn-remove">Remove this band from this venue.</button>
+            </form>
+        </div>
     }
 }
 

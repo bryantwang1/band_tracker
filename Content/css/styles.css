@@ -1,5 +1,5 @@
 body {
-    background-image: linear-gradient(to bottom, white, lightgray);
+    background-image: linear-gradient(to bottom, white, gray);
     background-attachment: fixed;
 }
 
@@ -44,5 +44,27 @@ textarea {
 
 h5 {
     font-size: 18px;
+    margin: 8px;
     margin-left: 1vw;
+}
+
+.custom-line-item {
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+}
+
+.btn-remove {
+    background-color: rgba(0, 0, 0, 0);
+    border: 1px solid black;
+    margin-left: 8px;
+    color: darkred;
+    height: 20px;
+    border-radius: 3px;
+}
+
+.btn-remove:hover {
+    background-color: rgba(0, 0, 100, 0.1);
+    color: darkred;
+    border: 1px solid blue;
 }

@@ -213,14 +213,11 @@ namespace BandTracker.Objects
             SqlConnection conn = DB.Connection();
             conn.Open();
 
-            SqlCommand cmd = new SqlCommand("SELECT venues.* FROM venues LEFT OUTER JOIN bands_venues ON(venues.id = bands_venues.venue_id) WHERE bands_venues.band_id IS null OR bands_venues.band_id <> @BandId;", conn);
-            SqlParameter idParameter = new SqlParameter();
-            idParameter.ParameterName = "@BandId";
-            idParameter.Value = this.Id;
-            cmd.Parameters.Add(idParameter);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM venues;", conn);
 
             SqlDataReader rdr = cmd.ExecuteReader();
 
+            List<Venue> relatedVenues = this.GetVenues();
             List<Venue> allVenues = new List<Venue> {};
             while(rdr.Read())
             {
@@ -229,7 +226,10 @@ namespace BandTracker.Objects
                 string venueLocation = rdr.GetString(2);
 
                 Venue newVenue = new Venue(venueName, venueLocation, venueId);
-                allVenues.Add(newVenue);
+                if(relatedVenues.IndexOf(newVenue) < 0)
+                {
+                    allVenues.Add(newVenue);
+                }
             }
             if(rdr != null)
             {
@@ -261,7 +261,7 @@ namespace BandTracker.Objects
             cmd.Parameters.Add(venueIdParameter);
 
             cmd.ExecuteNonQuery();
-            
+
             if(conn != null)
             {
                 conn.Close();
