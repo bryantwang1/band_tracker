@@ -27,8 +27,9 @@ _To run this web app you need the Nancy framework for C# as well as a local SQL 
           > GO
 
   * Do the above for a database called band_tracker_test or just delete the test files if you don't want to bother;
-6. Check the Startup.cs file to make sure that the DBConfiguration ConnectionString's data source has the correct path for your local SQL server.
-7. Type `dnx kestrel` into PowerShell and hit enter, the local server should now be running
+6. Check the Startup.cs (also the Test cs files if you want to bother testing) file to make sure that the DBConfiguration ConnectionString's data source has the correct path for your local SQL server.
+7. Type `dnx kestrel` into PowerShell and hit enter, the local server should now be running.
+  * Type `dnx test` instead if you want to run the automated tests.
 8. Open your preferred web browser and navigate to localhost:5004, the main page should appear
 9. Go wild
 
